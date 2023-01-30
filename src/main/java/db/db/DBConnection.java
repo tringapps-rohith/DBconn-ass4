@@ -7,12 +7,12 @@ package db.db;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.Logger;
+//jdbc:mysql://localhost:3306/db1
 class DBConnection 
 {
 	String hostAdd;
 	String username;
-	String password="";
-	Logger l=Logger.getLogger("com.api.jar");
+	String password;
 	private DBConnection(String hostAdd, String username, String password) 
 	{
 		this.hostAdd = hostAdd;
@@ -35,15 +35,14 @@ class DBConnection
 			l.info("Connection Established successfully");
 			st=conn.createStatement();
 			rs=st.executeQuery("select * from student");
-		l.info("\nId\t\tName\tCollege");
+		l.infoln("\nId\t\tName\tCollege");
 		while(rs.next())
 		{
-			String s="rs.getString(1)+\"\\t\\t\"+rs.getString(2)+\"\\t\"+rs.getString(3)";
-			l.info(s);
+			l.log(Level.INFO,()-> rs.getString(1)+"\t\t"+rs.getString(2)+"\t"+rs.getString(3));
 		}
 		}
 		catch (Exception e) {
-			l.info("Connection failed exception");
+			l.log(Level.INFO,()-> e);
 		}
 	}
 	void Close() {
@@ -55,7 +54,7 @@ class DBConnection
 		l.info("Connection Closed....");
 		} 
 		catch (Exception e) {
-			l.info("Connection unable to close exception");
+			l.log(Level.INFO,()-> e);
 		}
 	}
 	public static void main(String[] args)
@@ -66,7 +65,8 @@ class DBConnection
 		String hostAdd = sin.next();
 		l.info("Enter Database Name : ");
 		String username = sin.next();
-		String password = "";
+		l.info("Enter Password : ");
+		String password = sin.next();
 		int ch;
 		DBConnection d = DBConnection.getInstance(hostAdd, username, password);
 		do 
