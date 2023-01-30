@@ -45,7 +45,7 @@ class DBConnection
 			l.log(Level.INFO,()-> e);
 		}
 	}
-	void Close() {
+	void closeconn() {
 	try {
 		
 		rs.close();
@@ -81,7 +81,7 @@ class DBConnection
 						d.connect();
 						break;
 				case 2:
-						d.Close();
+						d.closeconn();
 						break;
 				default:l.info("Enter correct choice\n");
 						break;
